@@ -21,14 +21,15 @@ function test(log, config)
 test.prototype.accessories = function(callback){
  var results = [];
  let client = new net.Socket();
- var ip = this.ip;
+ var ip = this.ip = '192.168.1.79';
  var gen = this.gen;
- var port = this.port;
- client.connect(port, this.ip, function() {
+ var port = this.port = 8989;
+ client.connect(port, ip, function() {
 	console.log('Connected to Dummy Server at IP:',ip,'and port:',port);
   });
+  
  client.on('data', function(data) {
-	try {
+	try { 
 	data = JSON.parse(data);
 	results[data.id-1].updatevalue(Boolean(data.value));
 
